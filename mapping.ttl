@@ -1,0 +1,1395 @@
+@prefix map: <#> .
+@prefix db: <> .
+@prefix vocab: <vocab/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix iswc: <http://annotation.semanticweb.org/iswc/iswc.daml#> .
+
+@prefix vcard: <http://www.w3.org/2001/vcard-rdf/3.0#> .
+
+map:database a d2rq:Database;
+	d2rq:jdbcDriver "com.mysql.jdbc.Driver";
+	d2rq:jdbcDSN "jdbc:mysql://localhost/urinvestigadores";
+	d2rq:username "root";
+	d2rq:password "";
+	jdbc:autoReconnect "true";
+	jdbc:zeroDateTimeBehavior "convertToNull";
+	.
+
+# Table acongreso
+map:Congreso a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "acongreso/@@acongreso.CODAC@@";
+	d2rq:class vocab:Congreso;
+	d2rq:classDefinitionLabel "Congress"@en;
+	d2rq:classDefinitionLabel "Congreso"@es;
+  d2rq:classDefinitionComment "This is a congress"@en;
+	d2rq:classDefinitionComment "Un congreso"@es;
+	.
+map:acongreso__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Congreso;
+	d2rq:property rdfs:label;
+	#d2rq:pattern "Congreso #@@acongreso.CODAC@@";
+	d2rq:pattern "@@acongreso.CLAVEPRIMARIA@@";
+	.
+map:acongreso_CLAVEPRIMARIA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Congreso;
+	d2rq:property vocab:acongreso_CLAVEPRIMARIA;
+	d2rq:propertyDefinitionLabel "acongreso CLAVEPRIMARIA";
+	d2rq:column "acongreso.CLAVEPRIMARIA";
+	.
+map:acongreso_CONGRESOCONTRIBUCION a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Congreso;
+	d2rq:property vocab:acongreso_CONGRESOCONTRIBUCION;
+	d2rq:propertyDefinitionLabel "acongreso CONGRESOCONTRIBUCION";
+	d2rq:column "acongreso.CONGRESOCONTRIBUCION";
+	.
+map:acongreso_CODAC__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Congreso;
+	d2rq:property vocab:acongreso_CODAC;
+	d2rq:refersToClassMap map:Actividades;
+	d2rq:join "acongreso.CODAC => actividades_espejo.CODIGOAC";
+	.
+
+# Table actividades_espejo
+map:Actividades a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "actividades/@@actividades_espejo.CODIGOAC@@";
+	d2rq:class vocab:actividades_espejo;
+	d2rq:classDefinitionLabel "actividades_espejo";
+	.
+map:Actividades__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property rdfs:label;
+	d2rq:pattern "@@actividades_espejo.DOCUMENTO@@";
+	.
+map:Actividades_CODIGOAC a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_CODIGOAC;
+	d2rq:propertyDefinitionLabel "actividades_espejo CODIGOAC";
+	d2rq:column "actividades_espejo.CODIGOAC";
+	d2rq:datatype xsd:integer;
+	.
+map:Actividades_DOCUMENTO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_DOCUMENTO;
+	d2rq:propertyDefinitionLabel "actividades_espejo DOCUMENTO";
+	d2rq:column "actividades_espejo.DOCUMENTO";
+	.
+map:Actividades_anoinicio a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_anoinicio;
+	d2rq:propertyDefinitionLabel "actividades_espejo anoinicio";
+	d2rq:column "actividades_espejo.anoinicio";
+	d2rq:datatype xsd:integer;
+	.
+map:Actividades_TIPO_ACTIVIDAD a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_TIPO_ACTIVIDAD;
+	d2rq:propertyDefinitionLabel "actividades_espejo TIPO_ACTIVIDAD";
+	d2rq:column "actividades_espejo.TIPO_ACTIVIDAD";
+	.
+map:Actividades_ISBN a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_ISBN;
+	d2rq:propertyDefinitionLabel "actividades_espejo ISBN";
+	d2rq:column "actividades_espejo.ISBN";
+	.
+map:Actividades_PAGINAINICIO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_PAGINAINICIO;
+	d2rq:propertyDefinitionLabel "actividades_espejo PAGINAINICIO";
+	d2rq:column "actividades_espejo.PAGINAINICIO";
+	.
+map:Actividades_PAGINAFIN a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_PAGINAFIN;
+	d2rq:propertyDefinitionLabel "actividades_espejo PAGINAFIN";
+	d2rq:column "actividades_espejo.PAGINAFIN";
+	.
+map:Actividades_registro_completo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_registro_completo;
+	d2rq:propertyDefinitionLabel "actividades_espejo registro_completo";
+	d2rq:column "actividades_espejo.registro_completo";
+	.
+map:Actividades_URL_texto_completo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_URL_texto_completo;
+	d2rq:propertyDefinitionLabel "actividades_espejo URL_texto_completo";
+	d2rq:column "actividades_espejo.URL_texto_completo";
+	.
+map:Actividades_URL_texto_completo_TIPO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_URL_texto_completo_TIPO;
+	d2rq:propertyDefinitionLabel "actividades_espejo URL_texto_completo_TIPO";
+	d2rq:column "actividades_espejo.URL_texto_completo_TIPO";
+	.
+map:Actividades_URL_scopus a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_URL_scopus;
+	d2rq:propertyDefinitionLabel "actividades_espejo URL_scopus";
+	d2rq:column "actividades_espejo.URL_scopus";
+	.
+map:Actividades_URL_absys a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_URL_absys;
+	d2rq:propertyDefinitionLabel "actividades_espejo URL_absys";
+	d2rq:column "actividades_espejo.URL_absys";
+	.
+map:Actividades_tipo_documento a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_tipo_documento;
+	d2rq:propertyDefinitionLabel "actividades_espejo tipo_documento";
+	d2rq:column "actividades_espejo.tipo_documento";
+	.
+map:Actividades_Resumen a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_Resumen;
+	d2rq:propertyDefinitionLabel "actividades_espejo Resumen";
+	d2rq:column "actividades_espejo.Resumen";
+	.
+map:Actividades_TITULOAC a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_TITULOAC;
+	d2rq:propertyDefinitionLabel "actividades_espejo TITULOAC";
+	d2rq:column "actividades_espejo.TITULOAC";
+	.
+map:Actividades_CODIGO_IDIOMA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_CODIGO_IDIOMA;
+	d2rq:propertyDefinitionLabel "actividades_espejo CODIGO_IDIOMA";
+	d2rq:column "actividades_espejo.CODIGO_IDIOMA";
+	.
+map:Actividades_CODIGO_PAIS a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_CODIGO_PAIS;
+	d2rq:propertyDefinitionLabel "actividades_espejo CODIGO_PAIS";
+	d2rq:column "actividades_espejo.CODIGO_PAIS";
+	.
+<#actividades_espejo_año_jcr> a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property <vocab/actividades_espejo_año_jcr>;
+	d2rq:propertyDefinitionLabel "actividades_espejo año_jcr";
+	d2rq:column "actividades_espejo.año_jcr";
+	d2rq:datatype xsd:integer;
+	.
+<#actividades_espejo_año_sjr> a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property <vocab/actividades_espejo_año_sjr>;
+	d2rq:propertyDefinitionLabel "actividades_espejo año_sjr";
+	d2rq:column "actividades_espejo.año_sjr";
+	d2rq:datatype xsd:integer;
+	.
+map:Actividades_anio_para_inrecs a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_anio_para_inrecs;
+	d2rq:propertyDefinitionLabel "actividades_espejo anio_para_inrecs";
+	d2rq:column "actividades_espejo.anio_para_inrecs";
+	d2rq:datatype xsd:integer;
+	.
+map:Actividades_CIRC a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_CIRC;
+	d2rq:propertyDefinitionLabel "actividades_espejo CIRC";
+	d2rq:column "actividades_espejo.CIRC";
+	.
+map:Actividades_CARHUS a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_CARHUS;
+	d2rq:propertyDefinitionLabel "actividades_espejo CARHUS";
+	d2rq:column "actividades_espejo.CARHUS";
+	.
+map:Actividades_FASTCULO_REVISRA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_FASTCULO_REVISRA;
+	d2rq:propertyDefinitionLabel "actividades_espejo FASTCULO_REVISRA";
+	d2rq:column "actividades_espejo.FASTCULO_REVISRA";
+	.
+map:Actividades_codigo_ejemplar_revista a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_codigo_ejemplar_revista;
+	d2rq:propertyDefinitionLabel "actividades_espejo codigo_ejemplar_revista";
+	d2rq:column "actividades_espejo.codigo_ejemplar_revista";
+	.
+map:Actividades_issn_sin_guion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_issn_sin_guion;
+	d2rq:propertyDefinitionLabel "actividades_espejo issn_sin_guion";
+	d2rq:column "actividades_espejo.issn_sin_guion";
+	.
+map:Actividades_codigo_tipo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_codigo_tipo;
+	d2rq:propertyDefinitionLabel "actividades_espejo codigo_tipo";
+	d2rq:column "actividades_espejo.codigo_tipo";
+	.
+map:Actividades_DOI a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_DOI;
+	d2rq:propertyDefinitionLabel "actividades_espejo DOI";
+	d2rq:column "actividades_espejo.DOI";
+	.
+map:Actividades_VALIDADO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_VALIDADO;
+	d2rq:propertyDefinitionLabel "actividades_espejo VALIDADO";
+	d2rq:column "actividades_espejo.VALIDADO";
+	.
+map:Actividades_codigoTesisUR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_codigoTesisUR;
+	d2rq:propertyDefinitionLabel "actividades_espejo codigoTesisUR";
+	d2rq:column "actividades_espejo.codigoTesisUR";
+	.
+map:Actividades_codigoLibrosUR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_codigoLibrosUR;
+	d2rq:propertyDefinitionLabel "actividades_espejo codigoLibrosUR";
+	d2rq:column "actividades_espejo.codigoLibrosUR";
+	.
+map:Actividades_codigoLibroURCapitulos a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_codigoLibroURCapitulos;
+	d2rq:propertyDefinitionLabel "actividades_espejo codigoLibroURCapitulos";
+	d2rq:column "actividades_espejo.codigoLibroURCapitulos";
+	.
+map:Actividades_URL_IMAGEN_LIBRO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_URL_IMAGEN_LIBRO;
+	d2rq:propertyDefinitionLabel "actividades_espejo URL_IMAGEN_LIBRO";
+	d2rq:column "actividades_espejo.URL_IMAGEN_LIBRO";
+	.
+map:Actividades_REFERENCIAS a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_REFERENCIAS;
+	d2rq:propertyDefinitionLabel "actividades_espejo REFERENCIAS";
+	d2rq:column "actividades_espejo.REFERENCIAS";
+	.
+map:Actividades_contar_usuarios_ur a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Actividades;
+	d2rq:property vocab:actividades_espejo_contar_usuarios_ur;
+	d2rq:propertyDefinitionLabel "actividades_espejo contar_usuarios_ur";
+	d2rq:column "actividades_espejo.contar_usuarios_ur";
+	.
+
+# Table area_conocimiento
+map:Area_Conocimiento a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "area_conocimiento/@@area_conocimiento.codigo_area@@";
+	d2rq:class vocab:area_conocimiento;
+	d2rq:classDefinitionLabel "area_conocimiento";
+	.
+map:Area_Conocimiento__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Area_Conocimiento;
+	d2rq:property rdfs:label;
+	d2rq:pattern "@@area_conocimiento.nombre_area@@";
+	.
+map:Area_Conocimiento_codigo_area a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Area_Conocimiento;
+	d2rq:property vocab:area_conocimiento_codigo_area;
+	d2rq:propertyDefinitionLabel "area_conocimiento codigo_area";
+	d2rq:column "area_conocimiento.codigo_area";
+	d2rq:datatype xsd:integer;
+	.
+map:Area_Conocimiento_nombre_area a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Area_Conocimiento;
+	d2rq:property vocab:area_conocimiento_nombre_area;
+	d2rq:propertyDefinitionLabel "area_conocimiento nombre_area";
+	d2rq:column "area_conocimiento.nombre_area";
+	.
+
+# Table arevista
+map:Revista a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "arevista/@@arevista.CODIGOACT@@";
+	d2rq:class vocab:arevista;
+	d2rq:classDefinitionLabel "arevista";
+	.
+map:Revista__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property rdfs:label;
+	d2rq:pattern "@@arevista.STRNOMBREREVISTA@@";
+	.
+map:Revista_STRNOMBREREVISTA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_STRNOMBREREVISTA;
+	d2rq:propertyDefinitionLabel "arevista STRNOMBREREVISTA";
+	d2rq:column "arevista.STRNOMBREREVISTA";
+	.
+map:Revista_NUMERO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_NUMERO;
+	d2rq:propertyDefinitionLabel "arevista NUMERO";
+	d2rq:column "arevista.NUMERO";
+	.
+map:Revista_VOLUMEN a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_VOLUMEN;
+	d2rq:propertyDefinitionLabel "arevista VOLUMEN";
+	d2rq:column "arevista.VOLUMEN";
+	.
+map:Revista_ISSN_E a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_ISSN_E;
+	d2rq:propertyDefinitionLabel "arevista ISSN_E";
+	d2rq:column "arevista.ISSN_E";
+	.
+map:Revista_NUMIDREVISTA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_NUMIDREVISTA;
+	d2rq:propertyDefinitionLabel "arevista NUMIDREVISTA";
+	d2rq:column "arevista.NUMIDREVISTA";
+	.
+map:Revista___ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Revista;
+	d2rq:property vocab:arevista_;
+	d2rq:refersToClassMap map:Actividades;
+	d2rq:join "arevista.CODIGOACT => actividades_espejo.CODIGOAC";
+	.
+
+# Table asignatura
+map:Asignatura a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "asignatura/@@asignatura.codigoAsignatura@@";
+	d2rq:class vocab:asignatura;
+	d2rq:classDefinitionLabel "asignatura";
+	.
+map:Asignatura__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Asignatura;
+	d2rq:property rdfs:label;
+	d2rq:pattern "@@asignatura.nombre_asignatura@@";
+	.
+map:Asignatura_codigoAsignatura a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Asignatura;
+	d2rq:property vocab:asignatura_codigoAsignatura;
+	d2rq:propertyDefinitionLabel "asignatura codigoAsignatura";
+	d2rq:column "asignatura.codigoAsignatura";
+	d2rq:datatype xsd:integer;
+	.
+map:Asignatura_nombre_asignatura a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Asignatura;
+	d2rq:property vocab:asignatura_nombre_asignatura;
+	d2rq:propertyDefinitionLabel "asignatura nombre_asignatura";
+	d2rq:column "asignatura.nombre_asignatura";
+	.
+map:Asignatura_url_asignatura a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Asignatura;
+	d2rq:property vocab:asignatura_url_asignatura;
+	d2rq:propertyDefinitionLabel "asignatura url_asignatura";
+	d2rq:column "asignatura.url_asignatura";
+	.
+
+# Table centro_investig
+map:Centro_Investigador a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "centro_investig/@@centro_investig.CODIGO_CENTRO@@";
+	d2rq:class vocab:centro_investig;
+	d2rq:classDefinitionLabel "centro_investig";
+	.
+map:Centro_Investigador__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property rdfs:label;
+	d2rq:pattern "@@centro_investig.NOMBRE_CENTRO@@";
+	.
+map:Centro_Investigador_CODIGO_CENTRO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_CODIGO_CENTRO;
+	d2rq:propertyDefinitionLabel "centro_investig CODIGO_CENTRO";
+	d2rq:column "centro_investig.CODIGO_CENTRO";
+	d2rq:datatype xsd:integer;
+	.
+map:Centro_Investigador_NOMBRE_CENTRO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_NOMBRE_CENTRO;
+	d2rq:propertyDefinitionLabel "centro_investig NOMBRE_CENTRO";
+	d2rq:column "centro_investig.NOMBRE_CENTRO";
+	.
+map:Centro_Investigador_NOMBRE_CENTRO_ABREVIADO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_NOMBRE_CENTRO_ABREVIADO;
+	d2rq:propertyDefinitionLabel "centro_investig NOMBRE_CENTRO_ABREVIADO";
+	d2rq:column "centro_investig.NOMBRE_CENTRO_ABREVIADO";
+	.
+map:Centro_Investigador_TIPO_CENTRO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_TIPO_CENTRO;
+	d2rq:propertyDefinitionLabel "centro_investig TIPO_CENTRO";
+	d2rq:column "centro_investig.TIPO_CENTRO";
+	.
+map:Centro_Investigador_WEB_CENTRO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_WEB_CENTRO;
+	d2rq:propertyDefinitionLabel "centro_investig WEB_CENTRO";
+	d2rq:column "centro_investig.WEB_CENTRO";
+	.
+map:Centro_Investigador_CODIGO_DIRECTOR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_CODIGO_DIRECTOR;
+	d2rq:propertyDefinitionLabel "centro_investig CODIGO_DIRECTOR";
+	d2rq:column "centro_investig.CODIGO_DIRECTOR";
+	.
+map:Centro_Investigador_URL_REGLAMENTO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Centro_Investigador;
+	d2rq:property vocab:centro_investig_URL_REGLAMENTO;
+	d2rq:propertyDefinitionLabel "centro_investig URL_REGLAMENTO";
+	d2rq:column "centro_investig.URL_REGLAMENTO";
+	.
+
+# Table departamento
+map:departamento a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "departamento/@@departamento.codigo departamento|urlify@@";
+	d2rq:class vocab:departamento;
+	d2rq:classDefinitionLabel "departamento";
+	.
+map:departamento__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:departamento;
+	d2rq:property rdfs:label;
+	d2rq:pattern "departamento #@@departamento.codigo departamento@@";
+	.
+<#departamento_codigo%20departamento> a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:departamento;
+	d2rq:property <vocab/departamento_codigo%20departamento>;
+	d2rq:propertyDefinitionLabel "departamento codigo departamento";
+	d2rq:column "departamento.codigo departamento";
+	.
+map:departamento_nombredepartamento a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:departamento;
+	d2rq:property vocab:departamento_nombredepartamento;
+	d2rq:propertyDefinitionLabel "departamento nombredepartamento";
+	d2rq:column "departamento.nombredepartamento";
+	.
+map:departamento_nombreDirector a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:departamento;
+	d2rq:property vocab:departamento_nombreDirector;
+	d2rq:propertyDefinitionLabel "departamento nombreDirector";
+	d2rq:column "departamento.nombreDirector";
+	.
+map:departamento_web a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:departamento;
+	d2rq:property vocab:departamento_web;
+	d2rq:propertyDefinitionLabel "departamento web";
+	d2rq:column "departamento.web";
+	.
+
+# Table especialidades
+map:especialidades a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "especialidades/@@especialidades.codigo@@";
+	d2rq:class vocab:especialidades;
+	d2rq:classDefinitionLabel "especialidades";
+	.
+map:especialidades__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades;
+	d2rq:property rdfs:label;
+	d2rq:pattern "especialidades #@@especialidades.codigo@@";
+	.
+map:especialidades_codigo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades;
+	d2rq:property vocab:especialidades_codigo;
+	d2rq:propertyDefinitionLabel "especialidades codigo";
+	d2rq:column "especialidades.codigo";
+	d2rq:datatype xsd:integer;
+	.
+map:especialidades_numero a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades;
+	d2rq:property vocab:especialidades_numero;
+	d2rq:propertyDefinitionLabel "especialidades numero";
+	d2rq:column "especialidades.numero";
+	d2rq:datatype xsd:integer;
+	.
+map:especialidades_Nombre_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades;
+	d2rq:property vocab:especialidades_Nombre_especialidad;
+	d2rq:propertyDefinitionLabel "especialidades Nombre_especialidad";
+	d2rq:column "especialidades.Nombre_especialidad";
+	.
+
+# Table especialidades_grados
+map:especialidades_grados a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "especialidades_grados/@@especialidades_grados.cdigo_registro@@";
+	d2rq:class vocab:especialidades_grados;
+	d2rq:classDefinitionLabel "especialidades_grados";
+	.
+map:especialidades_grados__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades_grados;
+	d2rq:property rdfs:label;
+	d2rq:pattern "especialidades_grados #@@especialidades_grados.cdigo_registro@@";
+	.
+map:especialidades_grados_cdigo_registro a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades_grados;
+	d2rq:property vocab:especialidades_grados_cdigo_registro;
+	d2rq:propertyDefinitionLabel "especialidades_grados cdigo_registro";
+	d2rq:column "especialidades_grados.cdigo_registro";
+	d2rq:datatype xsd:integer;
+	.
+map:especialidades_grados_codigo_tipo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades_grados;
+	d2rq:property vocab:especialidades_grados_codigo_tipo;
+	d2rq:propertyDefinitionLabel "especialidades_grados codigo_tipo";
+	d2rq:column "especialidades_grados.codigo_tipo";
+	d2rq:datatype xsd:integer;
+	.
+map:especialidades_grados_nombre_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades_grados;
+	d2rq:property vocab:especialidades_grados_nombre_especialidad;
+	d2rq:propertyDefinitionLabel "especialidades_grados nombre_especialidad";
+	d2rq:column "especialidades_grados.nombre_especialidad";
+	.
+map:especialidades_grados_URL_TFE a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:especialidades_grados;
+	d2rq:property vocab:especialidades_grados_URL_TFE;
+	d2rq:propertyDefinitionLabel "especialidades_grados URL_TFE";
+	d2rq:column "especialidades_grados.URL_TFE";
+	.
+
+# Table facultad
+map:facultad a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "facultad/@@facultad.codigo_facultad@@";
+	d2rq:class vocab:facultad;
+	d2rq:classDefinitionLabel "facultad";
+	.
+map:facultad__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:facultad;
+	d2rq:property rdfs:label;
+	d2rq:pattern "facultad #@@facultad.codigo_facultad@@";
+	.
+map:facultad_codigo_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:facultad;
+	d2rq:property vocab:facultad_codigo_facultad;
+	d2rq:propertyDefinitionLabel "facultad codigo_facultad";
+	d2rq:column "facultad.codigo_facultad";
+	d2rq:datatype xsd:integer;
+	.
+map:facultad_nombre_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:facultad;
+	d2rq:property vocab:facultad_nombre_facultad;
+	d2rq:propertyDefinitionLabel "facultad nombre_facultad";
+	d2rq:column "facultad.nombre_facultad";
+	.
+map:facultad_Web_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:facultad;
+	d2rq:property vocab:facultad_Web_facultad;
+	d2rq:propertyDefinitionLabel "facultad Web_facultad";
+	d2rq:column "facultad.Web_facultad";
+	.
+
+# Table grup_inv_espejo
+map:grup_inv_espejo a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "grup_inv_espejo/@@grup_inv_espejo.IDGRUPOINV@@";
+	d2rq:class vocab:grup_inv_espejo;
+	d2rq:classDefinitionLabel "grup_inv_espejo";
+	.
+map:grup_inv_espejo__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property rdfs:label;
+	d2rq:pattern "grup_inv_espejo #@@grup_inv_espejo.IDGRUPOINV@@";
+	.
+map:grup_inv_espejo_IDGRUPOINV a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_IDGRUPOINV;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo IDGRUPOINV";
+	d2rq:column "grup_inv_espejo.IDGRUPOINV";
+	d2rq:datatype xsd:integer;
+	.
+map:grup_inv_espejo_DEPARTAMENTO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_DEPARTAMENTO;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo DEPARTAMENTO";
+	d2rq:column "grup_inv_espejo.DEPARTAMENTO";
+	.
+map:grup_inv_espejo_FECHAINICIO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_FECHAINICIO;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo FECHAINICIO";
+	d2rq:column "grup_inv_espejo.FECHAINICIO";
+	.
+map:grup_inv_espejo_FECHAFIN a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_FECHAFIN;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo FECHAFIN";
+	d2rq:column "grup_inv_espejo.FECHAFIN";
+	.
+map:grup_inv_espejo_ACRONIMO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_ACRONIMO;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo ACRONIMO";
+	d2rq:column "grup_inv_espejo.ACRONIMO";
+	.
+map:grup_inv_espejo_DESCGRUPOINV a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_DESCGRUPOINV;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo DESCGRUPOINV";
+	d2rq:column "grup_inv_espejo.DESCGRUPOINV";
+	.
+map:grup_inv_espejo_LINEASINVESTIGACION a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_LINEASINVESTIGACION;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo LINEASINVESTIGACION";
+	d2rq:column "grup_inv_espejo.LINEASINVESTIGACION";
+	.
+map:grup_inv_espejo_web_grupo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_web_grupo;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo web_grupo";
+	d2rq:column "grup_inv_espejo.web_grupo";
+	.
+map:grup_inv_espejo_novedades_bibliograficas a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_novedades_bibliograficas;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo novedades_bibliograficas";
+	d2rq:column "grup_inv_espejo.novedades_bibliograficas";
+	.
+map:grup_inv_espejo_valido a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:grup_inv_espejo;
+	d2rq:property vocab:grup_inv_espejo_valido;
+	d2rq:propertyDefinitionLabel "grup_inv_espejo valido";
+	d2rq:column "grup_inv_espejo.valido";
+	.
+
+# Table inrecs
+map:inrecs a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "inrecs/@@inrecs.id@@";
+	d2rq:class vocab:inrecs;
+	d2rq:classDefinitionLabel "inrecs";
+	.
+map:inrecs__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property rdfs:label;
+	d2rq:pattern "inrecs #@@inrecs.id@@";
+	.
+map:inrecs_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_id;
+	d2rq:propertyDefinitionLabel "inrecs id";
+	d2rq:column "inrecs.id";
+	d2rq:datatype xsd:integer;
+	.
+map:inrecs_impacto_exportar a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_impacto_exportar;
+	d2rq:propertyDefinitionLabel "inrecs impacto_exportar";
+	d2rq:column "inrecs.impacto_exportar";
+	.
+map:inrecs_cuartil a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_cuartil;
+	d2rq:propertyDefinitionLabel "inrecs cuartil";
+	d2rq:column "inrecs.cuartil";
+	.
+<#inrecs_año> a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property <vocab/inrecs_año>;
+	d2rq:propertyDefinitionLabel "inrecs año";
+	d2rq:column "inrecs.año";
+	.
+map:inrecs_issn_sin_guion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_issn_sin_guion;
+	d2rq:propertyDefinitionLabel "inrecs issn_sin_guion";
+	d2rq:column "inrecs.issn_sin_guion";
+	.
+map:inrecs_disciplina a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_disciplina;
+	d2rq:propertyDefinitionLabel "inrecs disciplina";
+	d2rq:column "inrecs.disciplina";
+	.
+map:inrecs_edicion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:inrecs;
+	d2rq:property vocab:inrecs_edicion;
+	d2rq:propertyDefinitionLabel "inrecs edicion";
+	d2rq:column "inrecs.edicion";
+	.
+
+# Table investig_grupo_espejo
+map:investig_grupo_espejo a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "investig_grupo_espejo/@@investig_grupo_espejo.id@@";
+	d2rq:class vocab:investig_grupo_espejo;
+	d2rq:classDefinitionLabel "investig_grupo_espejo";
+	.
+map:investig_grupo_espejo__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investig_grupo_espejo;
+	d2rq:property rdfs:label;
+	d2rq:pattern "investig_grupo_espejo #@@investig_grupo_espejo.id@@";
+	.
+map:investig_grupo_espejo_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investig_grupo_espejo;
+	d2rq:property vocab:investig_grupo_espejo_id;
+	d2rq:propertyDefinitionLabel "investig_grupo_espejo id";
+	d2rq:column "investig_grupo_espejo.id";
+	d2rq:datatype xsd:integer;
+	.
+map:investig_grupo_espejo_idGrupo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investig_grupo_espejo;
+	d2rq:property vocab:investig_grupo_espejo_idGrupo;
+	d2rq:propertyDefinitionLabel "investig_grupo_espejo idGrupo";
+	d2rq:column "investig_grupo_espejo.idGrupo";
+	d2rq:datatype xsd:integer;
+	.
+map:investig_grupo_espejo_dni a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investig_grupo_espejo;
+	d2rq:property vocab:investig_grupo_espejo_dni;
+	d2rq:propertyDefinitionLabel "investig_grupo_espejo dni";
+	d2rq:column "investig_grupo_espejo.dni";
+	.
+
+# Table investigadoresactividad
+map:investigadoresactividad a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "investigadoresactividad/@@investigadoresactividad.identificador@@";
+	d2rq:class vocab:investigadoresactividad;
+	d2rq:classDefinitionLabel "investigadoresactividad";
+	.
+map:investigadoresactividad__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property rdfs:label;
+	d2rq:pattern "investigadoresactividad #@@investigadoresactividad.identificador@@";
+	.
+map:investigadoresactividad_identificador a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_identificador;
+	d2rq:propertyDefinitionLabel "investigadoresactividad identificador";
+	d2rq:column "investigadoresactividad.identificador";
+	d2rq:datatype xsd:integer;
+	.
+map:investigadoresactividad_codActividad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_codActividad;
+	d2rq:propertyDefinitionLabel "investigadoresactividad codActividad";
+	d2rq:column "investigadoresactividad.codActividad";
+	d2rq:datatype xsd:integer;
+	.
+map:investigadoresactividad_nombreInvestigador a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_nombreInvestigador;
+	d2rq:propertyDefinitionLabel "investigadoresactividad nombreInvestigador";
+	d2rq:column "investigadoresactividad.nombreInvestigador";
+	.
+map:investigadoresactividad_dni a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_dni;
+	d2rq:propertyDefinitionLabel "investigadoresactividad dni";
+	d2rq:column "investigadoresactividad.dni";
+	.
+map:investigadoresactividad_Tipo_actividad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_Tipo_actividad;
+	d2rq:propertyDefinitionLabel "investigadoresactividad Tipo_actividad";
+	d2rq:column "investigadoresactividad.Tipo_actividad";
+	.
+map:investigadoresactividad_tipo_autor a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_tipo_autor;
+	d2rq:propertyDefinitionLabel "investigadoresactividad tipo_autor";
+	d2rq:column "investigadoresactividad.tipo_autor";
+	.
+map:investigadoresactividad_numero_orden a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:investigadoresactividad;
+	d2rq:property vocab:investigadoresactividad_numero_orden;
+	d2rq:propertyDefinitionLabel "investigadoresactividad numero_orden";
+	d2rq:column "investigadoresactividad.numero_orden";
+	d2rq:datatype xsd:integer;
+	.
+
+# Table jcr
+map:jcr a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "jcr/@@jcr.codigo_ID@@";
+	d2rq:class vocab:jcr;
+	d2rq:classDefinitionLabel "jcr";
+	.
+map:jcr__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property rdfs:label;
+	d2rq:pattern "jcr #@@jcr.codigo_ID@@";
+	.
+map:jcr_codigo_ID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_codigo_ID;
+	d2rq:propertyDefinitionLabel "jcr codigo_ID";
+	d2rq:column "jcr.codigo_ID";
+	d2rq:datatype xsd:integer;
+	.
+map:jcr_anio a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_anio;
+	d2rq:propertyDefinitionLabel "jcr anio";
+	d2rq:column "jcr.anio";
+	d2rq:datatype xsd:integer;
+	.
+map:jcr_Edicion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_Edicion;
+	d2rq:propertyDefinitionLabel "jcr Edicion";
+	d2rq:column "jcr.Edicion";
+	.
+map:jcr_IMPACT_FACTOR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_IMPACT_FACTOR;
+	d2rq:propertyDefinitionLabel "jcr IMPACT_FACTOR";
+	d2rq:column "jcr.IMPACT_FACTOR";
+	.
+map:jcr_EIGENFACTOR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_EIGENFACTOR;
+	d2rq:propertyDefinitionLabel "jcr EIGENFACTOR";
+	d2rq:column "jcr.EIGENFACTOR";
+	.
+map:jcr_Area a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_Area;
+	d2rq:propertyDefinitionLabel "jcr Area";
+	d2rq:column "jcr.Area";
+	.
+map:jcr_QUARTILE_RANK a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_QUARTILE_RANK;
+	d2rq:propertyDefinitionLabel "jcr QUARTILE_RANK";
+	d2rq:column "jcr.QUARTILE_RANK";
+	.
+map:jcr_issn_sin_guion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_issn_sin_guion;
+	d2rq:propertyDefinitionLabel "jcr issn_sin_guion";
+	d2rq:column "jcr.issn_sin_guion";
+	.
+map:jcr_Orden_categoria a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:jcr;
+	d2rq:property vocab:jcr_Orden_categoria;
+	d2rq:propertyDefinitionLabel "jcr Orden_categoria";
+	d2rq:column "jcr.Orden_categoria";
+	.
+
+# Table sjr_snip
+map:sjr_snip a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "sjr_snip/@@sjr_snip.id@@";
+	d2rq:class vocab:sjr_snip;
+	d2rq:classDefinitionLabel "sjr_snip";
+	.
+map:sjr_snip__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property rdfs:label;
+	d2rq:pattern "sjr_snip #@@sjr_snip.id@@";
+	.
+map:sjr_snip_id a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property vocab:sjr_snip_id;
+	d2rq:propertyDefinitionLabel "sjr_snip id";
+	d2rq:column "sjr_snip.id";
+	d2rq:datatype xsd:integer;
+	.
+<#sjr_snip_año> a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property <vocab/sjr_snip_año>;
+	d2rq:propertyDefinitionLabel "sjr_snip año";
+	d2rq:column "sjr_snip.año";
+	d2rq:datatype xsd:integer;
+	.
+map:sjr_snip_issn_p a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property vocab:sjr_snip_issn_p;
+	d2rq:propertyDefinitionLabel "sjr_snip issn_p";
+	d2rq:column "sjr_snip.issn_p";
+	.
+map:sjr_snip_issn_e a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property vocab:sjr_snip_issn_e;
+	d2rq:propertyDefinitionLabel "sjr_snip issn_e";
+	d2rq:column "sjr_snip.issn_e";
+	.
+map:sjr_snip_sjr_exportar a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property vocab:sjr_snip_sjr_exportar;
+	d2rq:propertyDefinitionLabel "sjr_snip sjr_exportar";
+	d2rq:column "sjr_snip.sjr_exportar";
+	.
+map:sjr_snip_snip_exportar a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:sjr_snip;
+	d2rq:property vocab:sjr_snip_snip_exportar;
+	d2rq:propertyDefinitionLabel "sjr_snip snip_exportar";
+	d2rq:column "sjr_snip.snip_exportar";
+	.
+
+# Table trabajos_academicos
+map:trabajos_academicos a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "trabajos_academicos/@@trabajos_academicos.codigo_registro@@";
+	d2rq:class vocab:trabajos_academicos;
+	d2rq:classDefinitionLabel "trabajos_academicos";
+	.
+map:trabajos_academicos__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property rdfs:label;
+	d2rq:pattern "trabajos_academicos #@@trabajos_academicos.codigo_registro@@";
+	.
+map:trabajos_academicos_codigo_registro a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_codigo_registro;
+	d2rq:propertyDefinitionLabel "trabajos_academicos codigo_registro";
+	d2rq:column "trabajos_academicos.codigo_registro";
+	d2rq:datatype xsd:integer;
+	.
+map:trabajos_academicos_fecha_defensa a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_fecha_defensa;
+	d2rq:propertyDefinitionLabel "trabajos_academicos fecha_defensa";
+	d2rq:column "trabajos_academicos.fecha_defensa";
+	.
+map:trabajos_academicos_idioma a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_idioma;
+	d2rq:propertyDefinitionLabel "trabajos_academicos idioma";
+	d2rq:column "trabajos_academicos.idioma";
+	.
+map:trabajos_academicos_cod_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_cod_especialidad;
+	d2rq:propertyDefinitionLabel "trabajos_academicos cod_especialidad";
+	d2rq:column "trabajos_academicos.cod_especialidad";
+	.
+map:trabajos_academicos_tfe_nombreFichero a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_tfe_nombreFichero;
+	d2rq:propertyDefinitionLabel "trabajos_academicos tfe_nombreFichero";
+	d2rq:column "trabajos_academicos.tfe_nombreFichero";
+	.
+map:trabajos_academicos_TipoTrabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_TipoTrabajo;
+	d2rq:propertyDefinitionLabel "trabajos_academicos TipoTrabajo";
+	d2rq:column "trabajos_academicos.TipoTrabajo";
+	.
+map:trabajos_academicos_Titulo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_Titulo;
+	d2rq:propertyDefinitionLabel "trabajos_academicos Titulo";
+	d2rq:column "trabajos_academicos.Titulo";
+	.
+map:trabajos_academicos_url_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_url_trabajo;
+	d2rq:propertyDefinitionLabel "trabajos_academicos url_trabajo";
+	d2rq:column "trabajos_academicos.url_trabajo";
+	.
+map:trabajos_academicos_autores_nombre_apellidos a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_autores_nombre_apellidos;
+	d2rq:propertyDefinitionLabel "trabajos_academicos autores_nombre_apellidos";
+	d2rq:column "trabajos_academicos.autores_nombre_apellidos";
+	.
+map:trabajos_academicos_curso a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_curso;
+	d2rq:propertyDefinitionLabel "trabajos_academicos curso";
+	d2rq:column "trabajos_academicos.curso";
+	.
+map:trabajos_academicos_ano_finalizacion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_ano_finalizacion;
+	d2rq:propertyDefinitionLabel "trabajos_academicos ano_finalizacion";
+	d2rq:column "trabajos_academicos.ano_finalizacion";
+	.
+map:trabajos_academicos_cod_tipo_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_cod_tipo_trabajo;
+	d2rq:propertyDefinitionLabel "trabajos_academicos cod_tipo_trabajo";
+	d2rq:column "trabajos_academicos.cod_tipo_trabajo";
+	.
+map:trabajos_academicos_PFC_titulacion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_PFC_titulacion;
+	d2rq:propertyDefinitionLabel "trabajos_academicos PFC_titulacion";
+	d2rq:column "trabajos_academicos.PFC_titulacion";
+	.
+map:trabajos_academicos_Master_profesorado_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_Master_profesorado_especialidad;
+	d2rq:propertyDefinitionLabel "trabajos_academicos Master_profesorado_especialidad";
+	d2rq:column "trabajos_academicos.Master_profesorado_especialidad";
+	.
+map:trabajos_academicos_Esp_PFG a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos;
+	d2rq:property vocab:trabajos_academicos_Esp_PFG;
+	d2rq:propertyDefinitionLabel "trabajos_academicos Esp_PFG";
+	d2rq:column "trabajos_academicos.Esp_PFG";
+	.
+
+# Table trabajos_academicos_directores
+map:trabajos_academicos_directores a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	# Sorry, I don't know which columns to put into the uriPattern
+	#     for "trabajos_academicos_directores" because the table doesn't have a primary key.
+	#     Please specify it manually.
+	d2rq:uriPattern "trabajos_academicos_directores";
+	d2rq:class vocab:trabajos_academicos_directores;
+	d2rq:classDefinitionLabel "trabajos_academicos_directores";
+	.
+map:trabajos_academicos_directores_Identificador a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_Identificador;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores Identificador";
+	d2rq:column "trabajos_academicos_directores.Identificador";
+	d2rq:datatype xsd:integer;
+	.
+map:trabajos_academicos_directores_apellidos a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_apellidos;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores apellidos";
+	d2rq:column "trabajos_academicos_directores.apellidos";
+	.
+map:trabajos_academicos_directores_nombre a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_nombre;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores nombre";
+	d2rq:column "trabajos_academicos_directores.nombre";
+	.
+map:trabajos_academicos_directores_orden_aparicion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_orden_aparicion;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores orden_aparicion";
+	d2rq:column "trabajos_academicos_directores.orden_aparicion";
+	.
+map:trabajos_academicos_directores_Id_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_Id_trabajo;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores Id_trabajo";
+	d2rq:column "trabajos_academicos_directores.Id_trabajo";
+	d2rq:datatype xsd:integer;
+	.
+map:trabajos_academicos_directores_dni a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+	d2rq:property vocab:trabajos_academicos_directores_dni;
+	d2rq:propertyDefinitionLabel "trabajos_academicos_directores dni";
+	d2rq:column "trabajos_academicos_directores.dni";
+	.
+
+# Table ultima_sincro
+map:ultima_sincro a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "ultima_sincro/@@ultima_sincro.tipo|urlify@@";
+	d2rq:class vocab:ultima_sincro;
+	d2rq:classDefinitionLabel "ultima_sincro";
+	.
+map:ultima_sincro__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ultima_sincro;
+	d2rq:property rdfs:label;
+	d2rq:pattern "ultima_sincro #@@ultima_sincro.tipo@@";
+	.
+map:ultima_sincro_tipo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ultima_sincro;
+	d2rq:property vocab:ultima_sincro_tipo;
+	d2rq:propertyDefinitionLabel "ultima_sincro tipo";
+	d2rq:column "ultima_sincro.tipo";
+	.
+map:ultima_sincro_fecha a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ultima_sincro;
+	d2rq:property vocab:ultima_sincro_fecha;
+	d2rq:propertyDefinitionLabel "ultima_sincro fecha";
+	d2rq:column "ultima_sincro.fecha";
+	.
+
+# Table ur_ejemplares
+map:ur_ejemplares a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "ur_ejemplares/@@ur_ejemplares.codigo@@";
+	d2rq:class vocab:ur_ejemplares;
+	d2rq:classDefinitionLabel "ur_ejemplares";
+	.
+map:ur_ejemplares__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property rdfs:label;
+	d2rq:pattern "ur_ejemplares #@@ur_ejemplares.codigo@@";
+	.
+map:ur_ejemplares_codigo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_codigo;
+	d2rq:propertyDefinitionLabel "ur_ejemplares codigo";
+	d2rq:column "ur_ejemplares.codigo";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_ejemplares_cod_UR_revista a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_cod_UR_revista;
+	d2rq:propertyDefinitionLabel "ur_ejemplares cod_UR_revista";
+	d2rq:column "ur_ejemplares.cod_UR_revista";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_ejemplares_ANUALIDAD a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_ANUALIDAD;
+	d2rq:propertyDefinitionLabel "ur_ejemplares ANUALIDAD";
+	d2rq:column "ur_ejemplares.ANUALIDAD";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_ejemplares_Volumen a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_Volumen;
+	d2rq:propertyDefinitionLabel "ur_ejemplares Volumen";
+	d2rq:column "ur_ejemplares.Volumen";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_ejemplares_FASCICULO a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_FASCICULO;
+	d2rq:propertyDefinitionLabel "ur_ejemplares FASCICULO";
+	d2rq:column "ur_ejemplares.FASCICULO";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_ejemplares_Numero a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_ejemplares;
+	d2rq:property vocab:ur_ejemplares_Numero;
+	d2rq:propertyDefinitionLabel "ur_ejemplares Numero";
+	d2rq:column "ur_ejemplares.Numero";
+	d2rq:datatype xsd:integer;
+	.
+
+# Table ur_revista
+map:ur_revista a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "ur_revista/@@ur_revista.codigo@@";
+	d2rq:class vocab:ur_revista;
+	d2rq:classDefinitionLabel "ur_revista";
+	.
+map:ur_revista__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property rdfs:label;
+	d2rq:pattern "ur_revista #@@ur_revista.codigo@@";
+	.
+map:ur_revista_codigo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_codigo;
+	d2rq:propertyDefinitionLabel "ur_revista codigo";
+	d2rq:column "ur_revista.codigo";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_revista_titulo_subtitulo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_titulo_subtitulo;
+	d2rq:propertyDefinitionLabel "ur_revista titulo_subtitulo";
+	d2rq:column "ur_revista.titulo_subtitulo";
+	.
+map:ur_revista_ISSN_Publico a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_ISSN_Publico;
+	d2rq:propertyDefinitionLabel "ur_revista ISSN_Publico";
+	d2rq:column "ur_revista.ISSN_Publico";
+	.
+map:ur_revista_URL_OFICIAL a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_URL_OFICIAL;
+	d2rq:propertyDefinitionLabel "ur_revista URL_OFICIAL";
+	d2rq:column "ur_revista.URL_OFICIAL";
+	.
+map:ur_revista_continuacion_DE a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_continuacion_DE;
+	d2rq:propertyDefinitionLabel "ur_revista continuacion_DE";
+	d2rq:column "ur_revista.continuacion_DE";
+	d2rq:datatype xsd:integer;
+	.
+map:ur_revista_URL_IMAGEN_REVISTA a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:ur_revista;
+	d2rq:property vocab:ur_revista_URL_IMAGEN_REVISTA;
+	d2rq:propertyDefinitionLabel "ur_revista URL_IMAGEN_REVISTA";
+	d2rq:column "ur_revista.URL_IMAGEN_REVISTA";
+	.
+
+# Table usuariosbur
+map:usuariosbur a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "usuariosbur/@@usuariosbur.codigo_ID_correlativo@@";
+	d2rq:class vocab:usuariosbur;
+	d2rq:classDefinitionLabel "usuariosbur";
+	.
+map:usuariosbur__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property rdfs:label;
+	d2rq:pattern "usuariosbur #@@usuariosbur.codigo_ID_correlativo@@";
+	.
+map:usuariosbur_codigo_ID_correlativo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_codigo_ID_correlativo;
+	d2rq:propertyDefinitionLabel "usuariosbur codigo_ID_correlativo";
+	d2rq:column "usuariosbur.codigo_ID_correlativo";
+	d2rq:datatype xsd:integer;
+	.
+map:usuariosbur_Nombre_completo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_Nombre_completo;
+	d2rq:propertyDefinitionLabel "usuariosbur Nombre_completo";
+	d2rq:column "usuariosbur.Nombre_completo";
+	.
+map:usuariosbur_investigador_universitasXXI a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_investigador_universitasXXI;
+	d2rq:propertyDefinitionLabel "usuariosbur investigador_universitasXXI";
+	d2rq:column "usuariosbur.investigador_universitasXXI";
+	.
+map:usuariosbur_Web a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_Web;
+	d2rq:propertyDefinitionLabel "usuariosbur Web";
+	d2rq:column "usuariosbur.Web";
+	.
+map:usuariosbur_codigo_scopus a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_codigo_scopus;
+	d2rq:propertyDefinitionLabel "usuariosbur codigo_scopus";
+	d2rq:column "usuariosbur.codigo_scopus";
+	.
+map:usuariosbur_url_autor_dialnet a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_url_autor_dialnet;
+	d2rq:propertyDefinitionLabel "usuariosbur url_autor_dialnet";
+	d2rq:column "usuariosbur.url_autor_dialnet";
+	.
+map:usuariosbur_url_autor_scopus a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_url_autor_scopus;
+	d2rq:propertyDefinitionLabel "usuariosbur url_autor_scopus";
+	d2rq:column "usuariosbur.url_autor_scopus";
+	.
+map:usuariosbur_URL_mathscinet a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_URL_mathscinet;
+	d2rq:propertyDefinitionLabel "usuariosbur URL_mathscinet";
+	d2rq:column "usuariosbur.URL_mathscinet";
+	.
+map:usuariosbur_URL_zentralbaltt a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_URL_zentralbaltt;
+	d2rq:propertyDefinitionLabel "usuariosbur URL_zentralbaltt";
+	d2rq:column "usuariosbur.URL_zentralbaltt";
+	.
+map:usuariosbur_Documat a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_Documat;
+	d2rq:propertyDefinitionLabel "usuariosbur Documat";
+	d2rq:column "usuariosbur.Documat";
+	.
+map:usuariosbur_url_autor_documat a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_url_autor_documat;
+	d2rq:propertyDefinitionLabel "usuariosbur url_autor_documat";
+	d2rq:column "usuariosbur.url_autor_documat";
+	.
+map:usuariosbur_DNI a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_DNI;
+	d2rq:propertyDefinitionLabel "usuariosbur DNI";
+	d2rq:column "usuariosbur.DNI";
+	.
+map:usuariosbur_tesis_titulo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_tesis_titulo;
+	d2rq:propertyDefinitionLabel "usuariosbur tesis_titulo";
+	d2rq:column "usuariosbur.tesis_titulo";
+	.
+map:usuariosbur_tesis_texto_completo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_tesis_texto_completo;
+	d2rq:propertyDefinitionLabel "usuariosbur tesis_texto_completo";
+	d2rq:column "usuariosbur.tesis_texto_completo";
+	.
+map:usuariosbur_CODIGO_Urraca a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_CODIGO_Urraca;
+	d2rq:propertyDefinitionLabel "usuariosbur CODIGO_Urraca";
+	d2rq:column "usuariosbur.CODIGO_Urraca";
+	.
+map:usuariosbur_url_catalogo_BUR a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_url_catalogo_BUR;
+	d2rq:propertyDefinitionLabel "usuariosbur url_catalogo_BUR";
+	d2rq:column "usuariosbur.url_catalogo_BUR";
+	.
+map:usuariosbur_email_dominio a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_email_dominio;
+	d2rq:propertyDefinitionLabel "usuariosbur email_dominio";
+	d2rq:column "usuariosbur.email_dominio";
+	.
+map:usuariosbur_email_prefijo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_email_prefijo;
+	d2rq:propertyDefinitionLabel "usuariosbur email_prefijo";
+	d2rq:column "usuariosbur.email_prefijo";
+	.
+map:usuariosbur_fecha_baja_institucion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_fecha_baja_institucion;
+	d2rq:propertyDefinitionLabel "usuariosbur fecha_baja_institucion";
+	d2rq:column "usuariosbur.fecha_baja_institucion";
+	.
+map:usuariosbur_ResearcherID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_ResearcherID;
+	d2rq:propertyDefinitionLabel "usuariosbur ResearcherID";
+	d2rq:column "usuariosbur.ResearcherID";
+	.
+map:usuariosbur_orcid a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_orcid;
+	d2rq:propertyDefinitionLabel "usuariosbur orcid";
+	d2rq:column "usuariosbur.orcid";
+	.
+map:usuariosbur_url_foto a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_url_foto;
+	d2rq:propertyDefinitionLabel "usuariosbur url_foto";
+	d2rq:column "usuariosbur.url_foto";
+	.
+map:usuariosbur_Departamento__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_Departamento;
+	d2rq:refersToClassMap map:departamento;
+	d2rq:join "usuariosbur.Departamento => departamento.codigo departamento";
+	.
+map:usuariosbur_Departamento__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_Departamento;
+	d2rq:refersToClassMap map:departamento;
+	d2rq:join "usuariosbur.Departamento => departamento.codigo departamento";
+	.
+map:usuariosbur_codigo_facultad__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_codigo_facultad;
+	d2rq:refersToClassMap map:facultad;
+	d2rq:join "usuariosbur.codigo_facultad => facultad.codigo_facultad";
+	.
+map:usuariosbur_centroInvestg__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_centroInvestg;
+	d2rq:refersToClassMap map:Centro_Investigador;
+	d2rq:join "usuariosbur.centroInvestg => centro_investig.CODIGO_CENTRO";
+	.
+map:usuariosbur_centroInvestg__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_centroInvestg;
+	d2rq:refersToClassMap map:Centro_Investigador;
+	d2rq:join "usuariosbur.centroInvestg => centro_investig.CODIGO_CENTRO";
+	.
+map:usuariosbur_cod_area_con__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:usuariosbur;
+	d2rq:property vocab:usuariosbur_cod_area_con;
+	d2rq:refersToClassMap map:Area_Conocimiento;
+	d2rq:join "usuariosbur.cod_area_con => area_conocimiento.codigo_area";
+	.
