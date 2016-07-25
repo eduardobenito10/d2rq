@@ -40,7 +40,7 @@
   
 map:database a d2rq:Database;
 	d2rq:jdbcDriver "com.mysql.jdbc.Driver";
-	d2rq:jdbcDSN "jdbc:mysql://localhost/urinvestigadores";
+	d2rq:jdbcDSN "jdbc:mysql://localhost/investigadoresur";
 	d2rq:username "root";
 	d2rq:password "";
 	jdbc:autoReconnect "true";
@@ -468,141 +468,141 @@ map:Centro_Investigador_URL_REGLAMENTO a d2rq:PropertyBridge;
 	.
 
 # Table departamento
-map:departamento a d2rq:ClassMap;
+map:Departamento a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "departamento/@@departamento.codigo departamento|urlify@@";
 	d2rq:class vocab:departamento;
 	d2rq:classDefinitionLabel "departamento";
 	.
-map:departamento__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:departamento;
+map:Departamento__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Departamento;
 	d2rq:property rdfs:label;
-	d2rq:pattern "departamento #@@departamento.codigo departamento@@";
+	d2rq:pattern "@@departamento.nombredepartamento@@";
 	.
 <#departamento_codigo%20departamento> a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:departamento;
+	d2rq:belongsToClassMap map:Departamento;
 	d2rq:property <vocab/departamento_codigo%20departamento>;
 	d2rq:propertyDefinitionLabel "departamento codigo departamento";
 	d2rq:column "departamento.codigo departamento";
 	.
-map:departamento_nombredepartamento a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:departamento;
+map:Departamento_nombredepartamento a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Departamento;
 	d2rq:property vocab:departamento_nombredepartamento;
 	d2rq:propertyDefinitionLabel "departamento nombredepartamento";
 	d2rq:column "departamento.nombredepartamento";
 	.
-map:departamento_nombreDirector a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:departamento;
+map:Departamento_nombreDirector a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Departamento;
 	d2rq:property vocab:departamento_nombreDirector;
 	d2rq:propertyDefinitionLabel "departamento nombreDirector";
 	d2rq:column "departamento.nombreDirector";
 	.
-map:departamento_web a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:departamento;
+map:Departamento_web a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Departamento;
 	d2rq:property vocab:departamento_web;
 	d2rq:propertyDefinitionLabel "departamento web";
 	d2rq:column "departamento.web";
 	.
 
 # Table especialidades
-map:especialidades a d2rq:ClassMap;
+map:Especialidades a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "especialidades/@@especialidades.codigo@@";
 	d2rq:class vocab:especialidades;
 	d2rq:classDefinitionLabel "especialidades";
 	.
-map:especialidades__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades;
+map:Especialidades__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades;
 	d2rq:property rdfs:label;
-	d2rq:pattern "especialidades #@@especialidades.codigo@@";
+	d2rq:pattern "@@especialidades.Nombre_especialidad@@";
 	.
-map:especialidades_codigo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades;
+map:Especialidades_codigo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades;
 	d2rq:property vocab:especialidades_codigo;
 	d2rq:propertyDefinitionLabel "especialidades codigo";
 	d2rq:column "especialidades.codigo";
 	d2rq:datatype xsd:integer;
 	.
-map:especialidades_numero a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades;
+map:Especialidades_numero a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades;
 	d2rq:property vocab:especialidades_numero;
 	d2rq:propertyDefinitionLabel "especialidades numero";
 	d2rq:column "especialidades.numero";
 	d2rq:datatype xsd:integer;
 	.
-map:especialidades_Nombre_especialidad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades;
+map:Especialidades_Nombre_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades;
 	d2rq:property vocab:especialidades_Nombre_especialidad;
 	d2rq:propertyDefinitionLabel "especialidades Nombre_especialidad";
 	d2rq:column "especialidades.Nombre_especialidad";
 	.
 
 # Table especialidades_grados
-map:especialidades_grados a d2rq:ClassMap;
+map:Especialidades_grados a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "especialidades_grados/@@especialidades_grados.cdigo_registro@@";
 	d2rq:class vocab:especialidades_grados;
 	d2rq:classDefinitionLabel "especialidades_grados";
 	.
-map:especialidades_grados__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades_grados;
+map:Especialidades_grados__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades_grados;
 	d2rq:property rdfs:label;
-	d2rq:pattern "especialidades_grados #@@especialidades_grados.cdigo_registro@@";
+	d2rq:pattern "@@especialidades_grados.nombre_especialidad@@";
 	.
-map:especialidades_grados_cdigo_registro a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades_grados;
+map:Especialidades_grados_cdigo_registro a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades_grados;
 	d2rq:property vocab:especialidades_grados_cdigo_registro;
 	d2rq:propertyDefinitionLabel "especialidades_grados cdigo_registro";
 	d2rq:column "especialidades_grados.cdigo_registro";
 	d2rq:datatype xsd:integer;
 	.
-map:especialidades_grados_codigo_tipo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades_grados;
+map:Especialidades_grados_codigo_tipo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades_grados;
 	d2rq:property vocab:especialidades_grados_codigo_tipo;
 	d2rq:propertyDefinitionLabel "especialidades_grados codigo_tipo";
 	d2rq:column "especialidades_grados.codigo_tipo";
 	d2rq:datatype xsd:integer;
 	.
-map:especialidades_grados_nombre_especialidad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades_grados;
+map:Especialidades_grados_nombre_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades_grados;
 	d2rq:property vocab:especialidades_grados_nombre_especialidad;
 	d2rq:propertyDefinitionLabel "especialidades_grados nombre_especialidad";
 	d2rq:column "especialidades_grados.nombre_especialidad";
 	.
-map:especialidades_grados_URL_TFE a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:especialidades_grados;
+map:Especialidades_grados_URL_TFE a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Especialidades_grados;
 	d2rq:property vocab:especialidades_grados_URL_TFE;
 	d2rq:propertyDefinitionLabel "especialidades_grados URL_TFE";
 	d2rq:column "especialidades_grados.URL_TFE";
 	.
 
 # Table facultad
-map:facultad a d2rq:ClassMap;
+map:Facultad a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "facultad/@@facultad.codigo_facultad@@";
 	d2rq:class vocab:facultad;
-	d2rq:classDefinitionLabel "facultad";
+	d2rq:classDefinitionLabel "Facultad";
 	.
-map:facultad__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:facultad;
+map:Facultad__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Facultad;
 	d2rq:property rdfs:label;
-	d2rq:pattern "facultad #@@facultad.codigo_facultad@@";
+	d2rq:pattern "@@facultad.nombre_facultad@@";
 	.
-map:facultad_codigo_facultad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:facultad;
+map:Facultad_codigo_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Facultad;
 	d2rq:property vocab:facultad_codigo_facultad;
 	d2rq:propertyDefinitionLabel "facultad codigo_facultad";
 	d2rq:column "facultad.codigo_facultad";
 	d2rq:datatype xsd:integer;
 	.
-map:facultad_nombre_facultad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:facultad;
+map:Facultad_nombre_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Facultad;
 	d2rq:property vocab:facultad_nombre_facultad;
 	d2rq:propertyDefinitionLabel "facultad nombre_facultad";
 	d2rq:column "facultad.nombre_facultad";
 	.
-map:facultad_Web_facultad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:facultad;
+map:Facultad_Web_facultad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Facultad;
 	d2rq:property vocab:facultad_Web_facultad;
 	d2rq:propertyDefinitionLabel "facultad Web_facultad";
 	d2rq:column "facultad.Web_facultad";
@@ -950,111 +950,111 @@ map:sjr_snip_snip_exportar a d2rq:PropertyBridge;
 	.
 
 # Table trabajos_academicos
-map:trabajos_academicos a d2rq:ClassMap;
+map:Trabajos_academicos a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	d2rq:uriPattern "trabajos_academicos/@@trabajos_academicos.codigo_registro@@";
 	d2rq:class vocab:trabajos_academicos;
 	d2rq:classDefinitionLabel "trabajos_academicos";
 	.
-map:trabajos_academicos__label a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos__label a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property rdfs:label;
-	d2rq:pattern "trabajos_academicos #@@trabajos_academicos.codigo_registro@@";
+	d2rq:pattern "@@trabajos_academicos.Titulo@@";
 	.
-map:trabajos_academicos_codigo_registro a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_codigo_registro a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_codigo_registro;
 	d2rq:propertyDefinitionLabel "trabajos_academicos codigo_registro";
 	d2rq:column "trabajos_academicos.codigo_registro";
 	d2rq:datatype xsd:integer;
 	.
-map:trabajos_academicos_fecha_defensa a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_fecha_defensa a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_fecha_defensa;
 	d2rq:propertyDefinitionLabel "trabajos_academicos fecha_defensa";
 	d2rq:column "trabajos_academicos.fecha_defensa";
 	.
-map:trabajos_academicos_idioma a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_idioma a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_idioma;
 	d2rq:propertyDefinitionLabel "trabajos_academicos idioma";
 	d2rq:column "trabajos_academicos.idioma";
 	.
-map:trabajos_academicos_cod_especialidad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_cod_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_cod_especialidad;
 	d2rq:propertyDefinitionLabel "trabajos_academicos cod_especialidad";
 	d2rq:column "trabajos_academicos.cod_especialidad";
 	.
-map:trabajos_academicos_tfe_nombreFichero a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_tfe_nombreFichero a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_tfe_nombreFichero;
 	d2rq:propertyDefinitionLabel "trabajos_academicos tfe_nombreFichero";
 	d2rq:column "trabajos_academicos.tfe_nombreFichero";
 	.
-map:trabajos_academicos_TipoTrabajo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_TipoTrabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_TipoTrabajo;
 	d2rq:propertyDefinitionLabel "trabajos_academicos TipoTrabajo";
 	d2rq:column "trabajos_academicos.TipoTrabajo";
 	.
-map:trabajos_academicos_Titulo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_Titulo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_Titulo;
 	d2rq:propertyDefinitionLabel "trabajos_academicos Titulo";
 	d2rq:column "trabajos_academicos.Titulo";
 	.
-map:trabajos_academicos_url_trabajo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_url_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_url_trabajo;
 	d2rq:propertyDefinitionLabel "trabajos_academicos url_trabajo";
 	d2rq:column "trabajos_academicos.url_trabajo";
 	.
-map:trabajos_academicos_autores_nombre_apellidos a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_autores_nombre_apellidos a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_autores_nombre_apellidos;
 	d2rq:propertyDefinitionLabel "trabajos_academicos autores_nombre_apellidos";
 	d2rq:column "trabajos_academicos.autores_nombre_apellidos";
 	.
-map:trabajos_academicos_curso a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_curso a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_curso;
 	d2rq:propertyDefinitionLabel "trabajos_academicos curso";
 	d2rq:column "trabajos_academicos.curso";
 	.
-map:trabajos_academicos_ano_finalizacion a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_ano_finalizacion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_ano_finalizacion;
 	d2rq:propertyDefinitionLabel "trabajos_academicos ano_finalizacion";
 	d2rq:column "trabajos_academicos.ano_finalizacion";
 	.
-map:trabajos_academicos_cod_tipo_trabajo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_cod_tipo_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_cod_tipo_trabajo;
 	d2rq:propertyDefinitionLabel "trabajos_academicos cod_tipo_trabajo";
 	d2rq:column "trabajos_academicos.cod_tipo_trabajo";
 	.
-map:trabajos_academicos_PFC_titulacion a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_PFC_titulacion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_PFC_titulacion;
 	d2rq:propertyDefinitionLabel "trabajos_academicos PFC_titulacion";
 	d2rq:column "trabajos_academicos.PFC_titulacion";
 	.
-map:trabajos_academicos_Master_profesorado_especialidad a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_Master_profesorado_especialidad a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_Master_profesorado_especialidad;
 	d2rq:propertyDefinitionLabel "trabajos_academicos Master_profesorado_especialidad";
 	d2rq:column "trabajos_academicos.Master_profesorado_especialidad";
 	.
-map:trabajos_academicos_Esp_PFG a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos;
+map:Trabajos_academicos_Esp_PFG a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos;
 	d2rq:property vocab:trabajos_academicos_Esp_PFG;
 	d2rq:propertyDefinitionLabel "trabajos_academicos Esp_PFG";
 	d2rq:column "trabajos_academicos.Esp_PFG";
 	.
 
 # Table trabajos_academicos_directores
-map:trabajos_academicos_directores a d2rq:ClassMap;
+map:Trabajos_academicos_directores a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
 	# Sorry, I don't know which columns to put into the uriPattern
 	#     for "trabajos_academicos_directores" because the table doesn't have a primary key.
@@ -1063,40 +1063,40 @@ map:trabajos_academicos_directores a d2rq:ClassMap;
 	d2rq:class vocab:trabajos_academicos_directores;
 	d2rq:classDefinitionLabel "trabajos_academicos_directores";
 	.
-map:trabajos_academicos_directores_Identificador a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_Identificador a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_Identificador;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores Identificador";
 	d2rq:column "trabajos_academicos_directores.Identificador";
 	d2rq:datatype xsd:integer;
 	.
-map:trabajos_academicos_directores_apellidos a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_apellidos a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_apellidos;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores apellidos";
 	d2rq:column "trabajos_academicos_directores.apellidos";
 	.
-map:trabajos_academicos_directores_nombre a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_nombre a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_nombre;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores nombre";
 	d2rq:column "trabajos_academicos_directores.nombre";
 	.
-map:trabajos_academicos_directores_orden_aparicion a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_orden_aparicion a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_orden_aparicion;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores orden_aparicion";
 	d2rq:column "trabajos_academicos_directores.orden_aparicion";
 	.
-map:trabajos_academicos_directores_Id_trabajo a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_Id_trabajo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_Id_trabajo;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores Id_trabajo";
 	d2rq:column "trabajos_academicos_directores.Id_trabajo";
 	d2rq:datatype xsd:integer;
 	.
-map:trabajos_academicos_directores_dni a d2rq:PropertyBridge;
-	d2rq:belongsToClassMap map:trabajos_academicos_directores;
+map:Trabajos_academicos_directores_dni a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Trabajos_academicos_directores;
 	d2rq:property vocab:trabajos_academicos_directores_dni;
 	d2rq:propertyDefinitionLabel "trabajos_academicos_directores dni";
 	d2rq:column "trabajos_academicos_directores.dni";
@@ -1381,19 +1381,19 @@ map:usuariosbur_url_foto a d2rq:PropertyBridge;
 map:usuariosbur_Departamento__ref a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:usuariosbur;
 	d2rq:property vocab:usuariosbur_Departamento;
-	d2rq:refersToClassMap map:departamento;
+	d2rq:refersToClassMap map:Departamento;
 	d2rq:join "usuariosbur.Departamento => departamento.codigo departamento";
 	.
 map:usuariosbur_Departamento__ref a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:usuariosbur;
 	d2rq:property vocab:usuariosbur_Departamento;
-	d2rq:refersToClassMap map:departamento;
+	d2rq:refersToClassMap map:Departamento;
 	d2rq:join "usuariosbur.Departamento => departamento.codigo departamento";
 	.
 map:usuariosbur_codigo_facultad__ref a d2rq:PropertyBridge;
 	d2rq:belongsToClassMap map:usuariosbur;
 	d2rq:property vocab:usuariosbur_codigo_facultad;
-	d2rq:refersToClassMap map:facultad;
+	d2rq:refersToClassMap map:Facultad;
 	d2rq:join "usuariosbur.codigo_facultad => facultad.codigo_facultad";
 	.
 map:usuariosbur_centroInvestg__ref a d2rq:PropertyBridge;
